@@ -1,0 +1,63 @@
+<div class="row">
+        <div class="col-md-12">
+      
+      
+          <% flash.get('mensaje').forEach(function (msg) { %>
+          <div class="alert alert-success" role="alert">
+            <%=msg%>
+          </div>
+          <% }) %>
+      
+          <h2>Admin - Dasboard</h2>
+      
+          <table class="table center">
+            <tr>
+                <td>
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="/images/cards/customer.png" height="64px">
+                        <div class="card-body">
+                            <h5 class="card-title">Clientes</h5>
+                            <p class="card-text">Total de clientes: <%=clientes%></p>
+                            <a href="/admin/clientes" class="btn btn-primary">Ir a Clientes</a>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="/images/cards/fotos.png" height="64px">
+                        <div class="card-body">
+                            <h5 class="card-title">Fotos</h5>
+                            <p class="card-text">Total de fotos: <%=fotos%></p>
+                            <a href="/admin/principal" class="btn btn-primary">Ir a Fotos</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                    <td>
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="/images/cards/administradores.png" height="64px">
+                            <div class="card-body">
+                                <h5 class="card-title">Clientes</h5>
+                                <p class="card-text">Total de administradores: <%=administradores%></p>
+                                <a href="/admin/administradores" class="btn btn-primary">Ir a Administradores</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="/images/cards/ordenes.png" height="64px">
+                            <div class="card-body">
+                                <h5 class="card-title">Ordenes</h5>
+                                <p class="card-text">Total de ordenes: <%=ordenes%></p>
+                                <a href="/admin/principal" class="btn btn-primary">Ir a Ordenes</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+          </table>
+      
+        </div>
+      
+      </div>
+      

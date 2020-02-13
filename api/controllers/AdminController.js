@@ -60,15 +60,13 @@ module.exports = {
       peticion.addFlash('mensaje', 'Sesión inválida')
       return respuesta.redirect("/admin/inicio-sesion")
     }   
-    let clientes = await Cliente.find().sort("id")
-    let administradores = await Admin.find().sort("id")
-    let ordenes = await Orden.find().sort("id")
-    let detalles = await OrdenDetalle.find().sort("id")
-    let deseos = await ListaDeseo.find().sort("id")
-    let carritos = await CarroCompra.find().sort("id")
-    let fotos = await Foto.find().sort("id")
+    let clientes = await Cliente.count()
+    let fotos = await Foto.count()
+    let administradores = await Admin.count()
+    let ordenes = await Orden.count()    
+    
 
-    respuesta.view('pages/admin/dashboard', {clientes, administradores, ordenes, detalles, deseos, carritos, fotos})  
+    respuesta.view('pages/admin/dashboard', { clientes, fotos, administradores, ordenes })  
   },
 
   cerrarSesion: async (peticion, respuesta) => {
