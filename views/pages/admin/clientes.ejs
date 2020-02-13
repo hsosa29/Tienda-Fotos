@@ -18,6 +18,7 @@
                 <th>Email</th>
                 <th>Contraseña</th>
                 <th>Activo</th>
+                <th>Órdenes</th>
                 <th>Acción</th>
               </tr>
             </thead>
@@ -27,8 +28,9 @@
                   <td><%=cliente.id%></td>
                   <td><%=cliente.nombre%></td>
                   <td><%=cliente.email%></td>
-                  <td><%=cliente.contrasena%></td>                  
+                  <td><%=cliente.contrasena%></td>                                   
                   <td><%=cliente.activo ? "Si" : "No"%></td>
+                  <td><a href="/admin/ordenes/<%=cliente.id%>" class="btn btn-dark">Ver Órdenes</a></td>
                   <td>
                     <% if (cliente.activo) { %>
                     <a href="/admin/desactivar-cliente/<%=cliente.id%>" class="btn btn-info">Desactivar Cliente</a>
