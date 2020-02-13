@@ -33,21 +33,37 @@
 
 
     <% } else if (session && session.admin) { %>
-    <li class="nav-item my-auto">
-      <span class="px-2 text-white">
-        <strong>ADMIN:</strong>
-        <%=session.admin.nombre%></span>
+    
+    <li class="nav-item">
+      <a class="btn btn-light mx-2" href="/admin/principal">Principal</a>
+    </li>
+    <li class="nav-item">
+      <a class="btn btn-light mx-2" href="/admin/clientes">Clientes</a>
+    </li>
+    <li class="nav-item">
+      <a class="btn btn-light mx-2" href="/admin/administradores">Administradores</a>
+    </li>
+    <li class="nav-item">
+      <a class="btn btn-light mx-2" href="/admin/dashboard">Dashboard</a>
     </li>
     <li class="nav-item">
       <a class="btn btn-light mx-2" href="/admin/cerrar-sesion">Cerrar Sesión</a>
     </li>
+    <li class="nav-item my-auto">
+        <span class="px-2 text-white">
+          <strong>ADMIN:</strong>
+          <%=session.admin.nombre%></span>
+      </li>
 
     <% } else { %>
     <li class="nav-item">
       <a class="btn btn-light" href="/registro">Registro</a>
     </li>
     <li class="nav-item">
-      <a class="btn btn-light mx-2" href="/inicio-sesion">Inicio de Sesión</a>
+      <a class="btn btn-light mx-2" href="/inicio-sesion">Clientes</a>
+    </li>
+    <li class="nav-item">
+      <a class="btn btn-light mx-2" href="/admin/inicio-sesion">Administrador</a>
     </li>
     <% } %>
   </ul>

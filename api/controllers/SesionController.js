@@ -34,7 +34,7 @@ module.exports = {
   },
 
   procesarInicioSesion: async (peticion, respuesta) => {
-    let cliente = await Cliente.findOne({ email: peticion.body.email, contrasena: peticion.body.contrasena });
+    let cliente = await Cliente.findOne({ email: peticion.body.email, contrasena: peticion.body.contrasena, activo: true });
     if (cliente) {
       peticion.session.cliente = cliente
       let carroCompra = await CarroCompra.find({cliente: cliente.id})
@@ -43,7 +43,7 @@ module.exports = {
       return respuesta.redirect("/")
     }
     else {
-      peticion.addFlash('mensaje', 'Email o contraseña invalidos')
+      peticion.addFlash('mensaje', 'Email o contraseña invalidos / Usuario desactivado')
       return respuesta.redirect("/inicio-sesion");
     }
   },

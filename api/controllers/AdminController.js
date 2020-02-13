@@ -15,7 +15,7 @@ module.exports = {
   },
 
   procesarInicioSesion: async (peticion, respuesta) => {
-    let admin = await Admin.findOne({ email: peticion.body.email, contrasena: peticion.body.contrasena })
+    let admin = await Admin.findOne({ email: peticion.body.email, contrasena: peticion.body.contrasena, activo:  true })
     if (admin) {
       peticion.session.admin = admin
       peticion.session.cliente = undefined
@@ -23,7 +23,7 @@ module.exports = {
       return respuesta.redirect("/admin/principal")
     }
     else {
-      peticion.addFlash('mensaje', 'Email o contraseña invalidos')
+      peticion.addFlash('mensaje', 'Email o contraseña invalidos / Usuario desactivado')
       return respuesta.redirect("/admin/inicio-sesion");
     }
   },
@@ -35,6 +35,40 @@ module.exports = {
     }
     let fotos = await Foto.find().sort("id")
     respuesta.view('pages/admin/principal', { fotos })
+  },
+
+  clientes: async (peticion, respuesta) => {
+    if (!peticion.session || !peticion.session.admin) {
+      peticion.addFlash('mensaje', 'Sesión inválida')
+      return respuesta.redirect("/admin/inicio-sesion")
+    }   
+    let clientes = await Cliente.find().sort("id")
+    respuesta.view('pages/admin/clientes', { clientes })  
+  },
+
+  administradores: async (peticion, respuesta) => {
+    if (!peticion.session || !peticion.session.admin) {
+      peticion.addFlash('mensaje', 'Sesión inválida')
+      return respuesta.redirect("/admin/inicio-sesion")
+    }   
+    let administradores = await Admin.find().sort("id")
+    respuesta.view('pages/admin/administradores', { administradores })  
+  },
+
+  dashboard: async (peticion, respuesta) => {
+    if (!peticion.session || !peticion.session.admin) {
+      peticion.addFlash('mensaje', 'Sesión inválida')
+      return respuesta.redirect("/admin/inicio-sesion")
+    }   
+    let clientes = await Cliente.find().sort("id")
+    let administradores = await Admin.find().sort("id")
+    let ordenes = await Orden.find().sort("id")
+    let detalles = await OrdenDetalle.find().sort("id")
+    let deseos = await ListaDeseo.find().sort("id")
+    let carritos = await CarroCompra.find().sort("id")
+    let fotos = await Foto.find().sort("id")
+
+    respuesta.view('pages/admin/dashboard', {clientes, administradores, ordenes, detalles, deseos, carritos, fotos})  
   },
 
   cerrarSesion: async (peticion, respuesta) => {
@@ -78,6 +112,30 @@ module.exports = {
     peticion.addFlash('mensaje', 'Foto activada')
     return respuesta.redirect("/admin/principal")
   },
+
+  activarCliente: async (peticion, respuesta) => {
+    await Cliente.update({id: peticion.params.clienteId}, {activo: true})
+    peticion.addFlash('mensaje', 'Cliente Activado')
+    return respuesta.redirect("/admin/clientes")
+  },
+
+  desactivarCliente: async (peticion, respuesta) => {
+    await Cliente.update({id: peticion.params.clienteId}, {activo: false})
+    peticion.addFlash('mensaje', 'Cliente Desactivado')
+    return respuesta.redirect("/admin/clientes")
+  },
+
+  activarAdministrador: async (peticion, respuesta) => {
+    await Admin.update({id: peticion.params.administradorId}, {activo: true})
+    peticion.addFlash('mensaje', 'Administrador Activado')
+    return respuesta.redirect("/admin/administradores")
+  },
+
+  desactivarAdministrador: async (peticion, respuesta) => {
+    await Admin.update({id: peticion.params.administradorId}, {activo: false})
+    peticion.addFlash('mensaje', 'Administrador Desactivado')
+    return respuesta.redirect("/admin/administradores")
+  }
 
 };
 
